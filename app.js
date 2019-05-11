@@ -3,11 +3,30 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const helmet = require('helmet');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+
+app.use(helmet({
+  dnsPrefetchControl: { allow: 'true' }
+}));
+
+//Connect to MongoDB
+mongoose.Promise = Promise;
+mongoose
+    .connect('mongodb+srv://mernuser:' + encodeURIComponent(process.env.MONGO_ATLAS_PW) + '@assignmentcluster-x3laa.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
+    .then(() => console.log('Mongo DB Connected'))
+    .catch(err => console.log(err));
+
+//Morgan logger
+if(app.get('env') === 'development') {
+  app.use(morgan('dev')); //logging only in development phase
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,10 +55,10 @@ app.use((req,res,next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/',(req,res) =>res.send('APii'));
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 //
 // // error handler
 // app.use(function(err, req, res, next) {
