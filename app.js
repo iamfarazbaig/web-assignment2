@@ -49,6 +49,8 @@ app.use((req, res, next) => {
 
 //Routes which should handle requests
 app.use("/endpoints/users", require("./routes/endpoints/users"));
+app.use("/endpoints/auth", require("./routes/endpoints/auth"));
+
 // app.use('/orders',ordersRoutes);
 // app.get('/', (req,res) => {
 //   res.render('index', {title: 'Shout/translate'})
