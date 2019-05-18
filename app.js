@@ -51,10 +51,7 @@ app.use((req, res, next) => {
 app.use("/users", require("./routes/users"));
 app.use("/auth", require("./routes/auth"));
 app.use("/profile", require("./routes/profile"));
-
-// app.use('/orders',ordersRoutes);
-// app.get('/', (req,res) => {
-//   res.render('index', {title: 'Shout/translate'})
+app.use("/posts", require("./routes/posts"));
 
 app.get("/", (req, res) => res.send("API working!"));
 const port = process.env.PORT || 5000;
