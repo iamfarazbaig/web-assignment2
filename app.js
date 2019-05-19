@@ -1,11 +1,9 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const { connectMongo } = require("./config/db");
-
 const app = express();
 
 //Helmet helps to secure Express apps by setting various HTTP headers.
@@ -22,10 +20,6 @@ connectMongo().catch(err => console.log(err));
 if (app.get("env") === "development") {
   app.use(morgan("dev")); //logging only in development phase
 }
-
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -54,8 +48,5 @@ app.use("/profile", require("./routes/profile"));
 app.use("/posts", require("./routes/posts"));
 
 app.get("/", (req, res) => res.send("API working!"));
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => console.log(`Server running on port ${port}`));
 
 module.exports = app;
