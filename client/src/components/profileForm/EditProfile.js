@@ -1,9 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createProfile } from "../../actions/profile";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 import { Link, withRouter } from "react-router-dom";
-const CreateProfile = ({ createProfile, history }) => {
+const EditProfile = ({
+  profile: { profile, loading },
+  createProfile,
+  getCurrentProfile,
+  history
+}) => {
   const [formData, setFormData] = useState({
     company: "",
     location: "",
@@ -13,22 +18,29 @@ const CreateProfile = ({ createProfile, history }) => {
     bio: "",
     linkedin: ""
   });
-  const {
-    company,
-    location,
-    status,
-    skills,
-    githubusername,
-    bio,
-    linkedin
-  } = formData;
+
+  useEffect(() => {
+    getCurrentProfile();
+
+    setFormData({
+      company: loading || !profile.company ? "" : profile.company,
+      location: loading || !profile.location ? "" : profile.location,
+      status: loading || !profile.status ? "" : profile.status,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      bio: loading || !profile.bio ? "" : profile.bio,
+      github: loading || !profile.social ? "" : profile.social.github,
+      linkedin: loading || !profile.social ? "" : profile.social.linkedin
+    });
+  }, [loading]);
+
+  const { company, location, status, skills, github, bio, linkedin } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, true);
   };
 
   return (
@@ -118,8 +130,8 @@ const CreateProfile = ({ createProfile, history }) => {
           <input
             type="text"
             placeholder="Github Username"
-            name="githubusername"
-            value={githubusername}
+            name="github"
+            value={github}
             onChange={e => onChange(e)}
           />
           <small className="form-text">
@@ -137,9 +149,18 @@ const CreateProfile = ({ createProfile, history }) => {
   );
 };
 
-CreateProfile.propTypes = { createProfile: PropTypes.func.isRequired };
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+  errors: state.errors
+});
 
 export default connect(
-  null,
-  { createProfile }
-)(withRouter(CreateProfile));
+  mapStateToProps,
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));

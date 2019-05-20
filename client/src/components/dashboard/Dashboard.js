@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
+import DashBoardItems from "./DashBoardItems";
+import Experience from "./Experience";
+import Education from "./Education";
 const Dashboard = ({
   getCurrentProfile,
   auth,
@@ -19,7 +22,11 @@ const Dashboard = ({
       <h1 className={"large text-primary"}>Dashboard</h1>
       <p className={"lead"}> Welcome </p>
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <DashBoardItems />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
+        </Fragment>
       ) : (
         <Fragment>
           <p>No profile found! Please setup your profile</p>
