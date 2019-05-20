@@ -1,97 +1,142 @@
 # Assignment 2 - ReactJS App & API.
 
 Name: Farazulla Baig Mohammed
+App link: https://assignment2ewd.herokuapp.com/
 
 ## Overview.
 It is a portfolio app wherein the user can login, add their details such as Education, experiences and can view other users too.
 
  . . . . . List of user features (excluding user registration and authentication) . . . . 
  
- + Used Gravatar for getting every user profile picture if uploaded to Gravatar email.
- + Feature 2
- + Feature 3
- + etc
- + etc
+ + Used redux for state management
+ + Testing with the Redux Chrome extension
+ + Prop-Type validation used.
+ + Authenticated and signed up users email and password and other data stored in MongoDB Atlas
+ + Protected routes against unauthenticated users
+ + Front end and backend form validation
+ + Used concurrently to run both front end and backend in parallel.
+ + All routes tested in Postman
+ + Unit testing for the models
+ + Deployed to Heroku with a postbuild script
+ + Used font awesome for styling
+ + React Hooks, Async/Await & modern practices
+ + Created extensive API but could not complete it in the front end
+ + Custom backend middleware (auth) to check for token
 
 ## Installation requirements.
 
-. . . . Briefly state (to a third party) the installation steps necessary to run your app.
+Run `npm install` and then `npm run dev` to run both frontend and backend concurrently
 
-## Data Model Design.
+## Test Suites in Postman.
 
-Diagram of app's data model (see example below) AND/OR a sample of the test data used (JSON or equivalent).
+Diagram of sample of the test data used in Postman.
 
-![][model]
+![][postman]
 
-## App Component Design.
+Diagram of the redux dev tools extension highlighting some of the action types used.
 
-A screenshot showing the component stories from Storybook  
+![][reduxActionTypes]
 
-![][stories]
+## App Component Design (Backend).
 
-. . . . Explain any non-standard stories, if necessary . . . . . 
+![][folderStructure]
+
+This displays the organization of files for the Backend API with the placement of business logic in controllers, routes, models having the schema and middleware which checks if a user possesses a valid token or not.
 
 ## UI Design.
 
-. . . . . Screenshots of app's views (see example below) with appropriate captions (user regeneration and login views, if implemented, can be omitted) . . . . . . . 
+Add education route
 
-![][image3]
+![][addEducation]
 
-## Routing.
-. . . . List each route supported and state the associated view . . . . . 
+Add experience route
 
-+ /foos - displays all published foos
-+ /foos/:id - detail view of a particular foo (:id)
-+ etc
-+ etc
+![][addExperience]
 
-Specify which, if any, of the above routes are protected (require login)
+Create profile route
 
-# Web API Endpoint Reference
-. . . Give a brief overview of the Web API functionality.
+![][createProfile]
 
+Dashboard route
+
+![][dashboard]
+
+## Routing and API Design.
+Users and Auth:
++ /auth - **POST** - login user
++ /auth - **GET** -  get authenticated user
++ /users - **POST** - register user
+
+Profiles:
++ /profile - **POST** - Create and update profile
++ /profile/me - **GET** - get logged in profile
++ /profile - **GET** - get all profiles
++ /profile/user/:user_id - **GET** - get profile by user id
++ /profile - **DELETE** - delete a profile
++ /profile/experience - **PUT** - add a experience(which is a part of profile- hence PUT is used)
++ /profile/education - **PUT** - add education
++ /profile/experience/:exp_id - **DELETE** - delete a experience by its id
++ /profile/education/:edu_id - **DELETE** - delete education by its id
++ profile/github/:github_username - **GET** - get 5 github repositories.
+
+Posts:
++ /posts - **POST** - add a post
++ /posts - **GET** - get all posts
++ /posts/:user_id - **GET** - get post by user id
++ /posts/:user_id - **DELETE** - delete post by user id
++ /posts/comment/:id - **POST** - add a comment by user id
++ /posts/comment/:id - **DELETE** - delete a comment by user id
+
+All routes except get all users and login and register are protected.
+
+# Web API Deployment and CI
+The app is deployed on Heroku.
+
+Travis CI
+![][ci]
 ## Web API Install and Operation
-. . . . Describe how to install/start/stop the API. It would be a good idea to go though the scripts section of the package.json file.
+![][test]
++ `npm run test` runs the test cases specified and also produces coverage report for which nyc test coverage tool is used
 
-## API Design
-Describe your web API.
++ `npm run dev` runs server and client using concurrently package
 
-| HTTP Verb & Path |  Description |
-| -- | -- |
-| **GET** /api/contacts |return a list of contacts |
-| **POST** /api/contacts |add a new contact |
-| **PUT** /posts/api/contacts/{id} | update a contact |
-| **DELETE** /posts/api/contacts/{id} | delete a contact |
++ `heroku-postbuild` is a post build script so that client and server run in heroku without any issues.
 
 ## API Configuration
-Describe the configuration approach for your endpoint. For example, contents of config file and where it should be located:
+The configuration approach for the API:
 ~~~bash
 NODE_ENV=development
-PORT=8080
+PORT=5000 in server.js in root folder for running server side.
+PORT=3000 for running client side.
 HOST=localhost
-mongoDB=YourMongoURL
-seedDb=true
-secret=YourJWTSecret
+mongoDB=https://cloud.mongodb.com/v2/5bdb868fc56c9822a3a1837b#clusters/detail/AssignmentCluster
 ~~~
-
-## Security and Authentication
-. . . . Give details of any autentication/security implemented in on the API. Indicate which routes are protected.
-
-## Testing
-. . . . Briefly explain any testing strategy that accompanies the project, including and example report if you have one...
-![][image4]
 
 ## Extra features
 
-. . . . . Briefly explain any non-standard features, functional or non-functional, developed for the app. This would include user registeration and authentication, improved re-rendering policies, etc . . . . . .  
+ + Used bcryptjs for hashing the passwords 
+ + Used Gravatar for getting every user profile picture if uploaded to Gravatar email.
++ Used Morgan for logging in development
++ Used express-validator
++ Used New Relic for analytics
+![][analytics]
++ Used prettier as a File Watcher on WebStorm to prettify code on save.
 
 ## Independent learning.
 
-. . . . . State the non-standard aspects of React (or other related technologies) that you researched and applied in this assignment . . . . .  
++ React Redux for efficient state management.
++ Redux middleware (Thunk) for asynchronous tasks
++ Used react hooks
++ Prop type validation
 
 
-
-[model]: ./data.jpg
-[image3]: ./screen.png
-[stories]: ./storybook.png
-[image4]: ./testing.png
+[postman]: ./postman.png
+[reduxActionTypes]: ./reduxActionTypes.png
+[folderStructure]: ./folderStructure.png
+[addEducation]: ./addEducation.png
+[addExperience]: ./addExperience.png
+[createProfile]: ./createProfile.png
+[dashboard]: ./dashboard.png
+[ci]: ./ci.png
+[test]: ./testing.png
+[analytics]: ./analytics.png
