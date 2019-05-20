@@ -1,5 +1,7 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const Post = require("../models/Post");
+
 const keys = require("../config/keys");
 const request = require("request");
 const { validationResult } = require("express-validator/check");
@@ -101,7 +103,7 @@ exports.deleteProfile = async (req, res) => {
   try {
     await Profile.findOneAndDelete({ user: req.user.id }); //remove profile
     await User.findOneAndDelete({ _id: req.user.id }); //remove user
-    // await Profile.findOneAndDelete({ user: req.user.id }); //remove post
+    await Post.deleteMany({ user: req.user.id }); //remove post
     res.json({ msg: "User deleted" });
   } catch (err) {
     console.error(err.message);
