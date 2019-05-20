@@ -31,7 +31,7 @@ const EditProfile = ({
       github: loading || !profile.social ? "" : profile.social.github,
       linkedin: loading || !profile.social ? "" : profile.social.linkedin
     });
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
   const { company, location, status, skills, github, bio, linkedin } = formData;
 

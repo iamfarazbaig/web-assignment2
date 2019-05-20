@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteExperience } from "../../actions/profile";
+import Spinner from "../layout/Spinner";
 
 const Experience = ({ experience, deleteExperience }) => {
+  // if (!experience || experience.loading) {
+  //   return <Spinner />;
+  // }
   const experiences = experience.map(exp => (
     <tr key={exp._id}>
       <td>{exp.company}</td>

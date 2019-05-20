@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteEducation } from "../../actions/profile";
+import Spinner from "../layout/Spinner";
 
 const Education = ({ education, deleteEducation }) => {
+  // if (!education || education.loading) {
+  //   return <Spinner />;
+  // }
   const educations = education.map(edu => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
