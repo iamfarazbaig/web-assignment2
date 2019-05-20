@@ -5,7 +5,6 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const { connectMongo } = require("./config/db");
 const app = express();
-
 //Helmet helps to secure Express apps by setting various HTTP headers.
 app.use(
   helmet({
@@ -24,7 +23,6 @@ if (app.get("env") === "development") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 //To prevent CORS errors. this should be before routes
 app.use((req, res, next) => {
@@ -47,6 +45,11 @@ app.use("/auth", require("./routes/auth"));
 app.use("/profile", require("./routes/profile"));
 app.use("/posts", require("./routes/posts"));
 
-app.get("/", (req, res) => res.send("API working!"));
-
+//serve static assets in prod
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 module.exports = app;
