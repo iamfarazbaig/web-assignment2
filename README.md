@@ -6,7 +6,7 @@ App link: https://assignment2ewd.herokuapp.com/
 ## Overview.
 It is a portfolio app wherein the user can login, add their details such as Education, experiences and can view other users too.
 
- . . . . . List of user features (excluding user registration and authentication) . . . . 
+ . . . . . List of user features . . . . 
  
  + Used redux for state management
  + Testing with the Redux Chrome extension
@@ -22,6 +22,8 @@ It is a portfolio app wherein the user can login, add their details such as Educ
  + React Hooks, Async/Await & modern practices
  + Created extensive API but could not complete it in the front end
  + Custom backend middleware (auth) to check for token
+ + nodemon used during app development
+ + Leveraged WebStorm IntelliSense and prettier File Watcher for auto imports and formatting code automatically.
 
 ## Installation requirements.
 
@@ -121,6 +123,7 @@ mongoDB=https://cloud.mongodb.com/v2/5bdb868fc56c9822a3a1837b#clusters/detail/As
 + Used New Relic for analytics
 ![][analytics]
 + Used prettier as a File Watcher on WebStorm to prettify code on save.
++ Protection from CORS errors in app.js (server side) 
 
 ## Independent learning.
 
