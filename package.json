@@ -6,7 +6,7 @@
     "start": "nodemon server.js",
     "test": "nyc --reporter=html mocha test/**/*.js --exit",
     "client": "npm start --prefix client",
-    "deploy": "concurrently \"npm run start\" \"npm run client\""
+    "build": "concurrently \"npm run start\" \"npm run client\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
