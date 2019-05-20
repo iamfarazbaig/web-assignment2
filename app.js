@@ -1,4 +1,5 @@
 const express = require("express");
+require("newrelic");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
