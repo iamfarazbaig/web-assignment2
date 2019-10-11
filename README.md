@@ -1,6 +1,4 @@
-# Assignment 2 - ReactJS App & API.
-
-Name: Farazulla Baig Mohammed
+# Single Page Web Application - ReactJS App & API.
 
 
 App link: https://assignment2ewd.herokuapp.com/
